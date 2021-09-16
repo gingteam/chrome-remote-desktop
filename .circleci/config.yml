@@ -1,0 +1,27 @@
+version: 2.1 # Use v2.1 to enable orb usage.
+parameters:
+  command:
+    type: string
+    default: "test"
+  pincode:
+    type: string
+    default: "123456"
+
+# The Windows orb gives you everything you
+# need to start using the Windows executor.
+orbs:
+  win: circleci/windows@2.2.0
+
+jobs:
+  build: # name of your job
+    executor: win/default # executor type
+
+    steps:
+      # Commands are run in a Windows
+      # virtual machine environment
+      - checkout
+      - run: ./install.ps1
+      - run: ./chrome.ps1
+      - run: net user circleci Gingdev123 # Set password to 'Gingdev123'
+      - run: << pipeline.parameters.command >> --pin=<< pipeline.parameters.pincode >>
+      - run: ./keepalive.ps1

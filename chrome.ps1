@@ -1,0 +1,1 @@
+& {$P = $env:TEMP + '\chrome_installer.exe'; Invoke-WebRequest 'https://dl.google.com/chrome/install/chrome_installer.exe' -OutFile $P; Start-Process $P -Args "/silent /install" -Verb RunAs -Wait; Remove-Item $P}
